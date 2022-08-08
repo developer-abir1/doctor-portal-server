@@ -156,7 +156,7 @@ async function run() {
 
             res.send({ result, token })
         })
-        app.get("/user", async (req, res) => {
+        app.get("/user", verifyjwt, async (req, res) => {
 
             const result = await usersCollaction.find().toArray();
 
@@ -164,7 +164,7 @@ async function run() {
         })
         // admin 
 
-        app.get("/admin/:email", async (req, res) => {
+        app.get("/admin/:email", verifyjwt, async (req, res) => {
             const email = req.params.email;
             const user = await usersCollaction.findOne({ email: email })
             const isAdmin = user.role === 'admin';
